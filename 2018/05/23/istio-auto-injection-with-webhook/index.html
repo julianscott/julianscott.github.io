@@ -10,8 +10,8 @@
     <meta property="og:type" content="article">
 
     
-    <meta property="og:image" content="https://julianscott.github.io//img/home-bg-jeep.jpg">
-    <meta property="twitter:image" content="https://julianscott.github.io//img/home-bg-jeep.jpg" />
+    <meta property="og:image" content="//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="//img/home-bg-jeep.jpg" />
     
 
     
@@ -107,6 +107,10 @@
                         
                         <li>
                             <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
                         </li>
                         
                         <li>
@@ -254,7 +258,7 @@
 <p>Istio 0.7版本就利用了Kubernets webhook实现了sidecar的自动注入。</p>
 <h2 id="什么是admission">什么是Admission</h2>
 <hr>
-<p>Admission是Kubernets中的一个术语，指的是Kubernets API Server资源请求过程中的一个阶段。如下图所示，在API Server接收到资源创建请求时，首先会对请求进行认证和鉴权，然后经过Admission处理，最后再保存到etcd。
+<p>Admission是Kubernets中的一个术语，指的是Kubernets API Server资源请求过程中的一个阶段。如下图所示，在API Server接收到资源创建请求时，首先会对请求进行认证和鉴权，然后经过Admission处理，最后再保存到etcd。 
 <img src="https://img.zhaohuabing.com/in-post/2018-4-25-istio-auto-injection-with-webhook/admission-phase.png" alt="">
 从图中看到，Admission中有两个重要的阶段，Mutation和Validation，这两个阶段中执行的逻辑如下：</p>
 <ul>
@@ -334,7 +338,7 @@ kube-system    Active    1h
 <div class="zs-modal-box">
 	<div class="zs-modal-head">
 		<button type="button" class="close">×</button>
-		<span class="author"><a href="https://julianscott.github.io/"><img src="/img/favicon.png" />Water Science in R</a></span>
+		<span class="author"><a href="/"><img src="/img/favicon.png" />Water Science in R</a></span>
         
 	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
 		
@@ -368,7 +372,7 @@ kube-system    Active    1h
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2018/05/01/may-day-jiulonghu" data-toggle="tooltip" data-placement="top" title="川西秘境探险">&larr;
+                        <a href="/2018/05/21/algolia-integration-with-jekyll" data-toggle="tooltip" data-placement="top" title="使用Algolia为Gitpage博客提供站内搜索">&larr;
                             Previous Post</a>
                     </li>
                     
@@ -403,6 +407,8 @@ kube-system    Active    1h
                         
                         
                         
+                        
+                        
                         <a href="/tags/docker" title="docker">
                             docker
                         </a>
@@ -414,6 +420,8 @@ kube-system    Active    1h
                         <a href="/tags/istio" title="istio">
                             istio
                         </a>
+                        
+                        
                         
                         
                         

@@ -10,8 +10,8 @@
     <meta property="og:type" content="article">
 
     
-    <meta property="og:image" content="https://julianscott.github.io//img/home-bg-jeep.jpg">
-    <meta property="twitter:image" content="https://julianscott.github.io//img/home-bg-jeep.jpg" />
+    <meta property="og:image" content="//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="//img/home-bg-jeep.jpg" />
     
 
     
@@ -107,6 +107,10 @@
                         
                         <li>
                             <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
                         </li>
                         
                         <li>
@@ -275,35 +279,35 @@
 <p>例如，下面这个简单的<code>Gateway</code>配置了一个Load Balancer，以允许访问host bookinfo.com的https外部流量入mesh中：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.istio.io/v1alpha3
 <span style="color:#66d9ef">kind</span>: Gateway
-<span style="color:#66d9ef">metadata</span>:
+metadata:
   <span style="color:#66d9ef">name</span>: bookinfo-gateway
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">servers</span>:
-  - <span style="color:#66d9ef">port</span>:
+spec:
+  servers:
+  - port:
       <span style="color:#66d9ef">number</span>: <span style="color:#ae81ff">443</span>
       <span style="color:#66d9ef">name</span>: https
       <span style="color:#66d9ef">protocol</span>: HTTPS
-    <span style="color:#66d9ef">hosts</span>:
+    hosts:
     - bookinfo.com
-    <span style="color:#66d9ef">tls</span>:
+    tls:
       <span style="color:#66d9ef">mode</span>: SIMPLE
       <span style="color:#66d9ef">serverCertificate</span>: /tmp/tls.crt
       <span style="color:#66d9ef">privateKey</span>: /tmp/tls.key
 </code></pre></div><p>要为进入上面的Gateway的流量配置相应的路由，必须为同一个host定义一个<code>VirtualService</code>（在下一节中描述），并使用配置中的<code>gateways</code>字段绑定到前面定义的<code>Gateway</code> 上：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.istio.io/v1alpha3
 <span style="color:#66d9ef">kind</span>: VirtualService
-<span style="color:#66d9ef">metadata</span>:
+metadata:
   <span style="color:#66d9ef">name</span>: bookinfo
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">hosts</span>:
+spec:
+  hosts:
     - bookinfo.com
-  <span style="color:#66d9ef">gateways</span>:
-  - bookinfo-gateway <span style="color:#75715e"># &lt;---- bind to gateway</span>
-  <span style="color:#66d9ef">http</span>:
-  - <span style="color:#66d9ef">match</span>:
-    - <span style="color:#66d9ef">uri</span>:
+  gateways:
+  - bookinfo-gateway <span style="color:#75715e"># &lt;---- bind to gateway</span>
+  http:
+  - match:
+    - uri:
         <span style="color:#66d9ef">prefix</span>: /reviews
-    <span style="color:#66d9ef">route</span>:
+    route:
     ...
 </code></pre></div><p>Gateway可以用于建模边缘代理或纯粹的内部代理，如第一张图所示。 无论在哪个位置，所有网关都可以用相同的方式进行配置和控制。</p>
 <h3 id="virtualservice">VirtualService</h3>
@@ -312,51 +316,51 @@
 <p>例如，之前在<a href="/docs/guides/bookinfo/">Bookinfo</a> 应用程序的reviews服务中有两个RouteRule资源，如下所示：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: config.istio.io/v1alpha2
 <span style="color:#66d9ef">kind</span>: RouteRule
-<span style="color:#66d9ef">metadata</span>:
+metadata:
   <span style="color:#66d9ef">name</span>: reviews-default
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">destination</span>:
+spec:
+  destination:
     <span style="color:#66d9ef">name</span>: reviews
   <span style="color:#66d9ef">precedence</span>: <span style="color:#ae81ff">1</span>
-  <span style="color:#66d9ef">route</span>:
-  - <span style="color:#66d9ef">labels</span>:
+  route:
+  - labels:
       <span style="color:#66d9ef">version</span>: v1
 ---
 <span style="color:#66d9ef">apiVersion</span>: config.istio.io/v1alpha2
 <span style="color:#66d9ef">kind</span>: RouteRule
-<span style="color:#66d9ef">metadata</span>:
+metadata:
   <span style="color:#66d9ef">name</span>: reviews-test-v2
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">destination</span>:
+spec:
+  destination:
     <span style="color:#66d9ef">name</span>: reviews
   <span style="color:#66d9ef">precedence</span>: <span style="color:#ae81ff">2</span>
-  <span style="color:#66d9ef">match</span>:
-    <span style="color:#66d9ef">request</span>:
-      <span style="color:#66d9ef">headers</span>:
-        <span style="color:#66d9ef">cookie</span>:
+  match:
+    request:
+      headers:
+        cookie:
           <span style="color:#66d9ef">regex</span>: <span style="color:#e6db74">&#34;^(.*?;)?(user=jason)(;.*)?$&#34;</span>
-  <span style="color:#66d9ef">route</span>:
-  - <span style="color:#66d9ef">labels</span>:
+  route:
+  - labels:
       <span style="color:#66d9ef">version</span>: v2
 </code></pre></div><p>在<code>v1alph3</code>，可以在单个<code>VirtualService</code>资源中提供相同的配置：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.istio.io/v1alpha3
 <span style="color:#66d9ef">kind</span>: VirtualService
-<span style="color:#66d9ef">metadata</span>:
+metadata:
   <span style="color:#66d9ef">name</span>: reviews
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">hosts</span>:
+spec:
+  hosts:
     - reviews
-  <span style="color:#66d9ef">http</span>:
-  - <span style="color:#66d9ef">match</span>:
-    - <span style="color:#66d9ef">headers</span>:
-        <span style="color:#66d9ef">cookie</span>:
+  http:
+  - match:
+    - headers:
+        cookie:
           <span style="color:#66d9ef">regex</span>: <span style="color:#e6db74">&#34;^(.*?;)?(user=jason)(;.*)?$&#34;</span>
-    <span style="color:#66d9ef">route</span>:
-    - <span style="color:#66d9ef">destination</span>:
+    route:
+    - destination:
         <span style="color:#66d9ef">host</span>: reviews
         <span style="color:#66d9ef">subset</span>: v2
-  - <span style="color:#66d9ef">route</span>:
-    - <span style="color:#66d9ef">destination</span>:
+  - route:
+    - destination:
         <span style="color:#66d9ef">host</span>: reviews
         <span style="color:#66d9ef">subset</span>: v1
 </code></pre></div><p>正如你所看到的， 和reviews服务相关的两个规则集中写在了一个地方。这个改变乍一看可能觉得并没有什么特别的优势， 然而，如果仔细观察这个新模型，会发现它和之前的API之间存在着根本的差异，这使得v1alpha3功能更加强大。</p>
@@ -366,23 +370,23 @@
 <p>例如，以下规则允许服务消费者访问Bookinfo应用程序的reviews和ratings服务，就好像它们是<code>http://bookinfo.com/</code>（虚拟）服务的一部分：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.istio.io/v1alpha3
 <span style="color:#66d9ef">kind</span>: VirtualService
-<span style="color:#66d9ef">metadata</span>:
+metadata:
   <span style="color:#66d9ef">name</span>: bookinfo
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">hosts</span>:
+spec:
+  hosts:
     - bookinfo.com
-  <span style="color:#66d9ef">http</span>:
-  - <span style="color:#66d9ef">match</span>:
-    - <span style="color:#66d9ef">uri</span>:
+  http:
+  - match:
+    - uri:
         <span style="color:#66d9ef">prefix</span>: /reviews
-    <span style="color:#66d9ef">route</span>:
-    - <span style="color:#66d9ef">destination</span>:
+    route:
+    - destination:
         <span style="color:#66d9ef">host</span>: reviews
-  - <span style="color:#66d9ef">match</span>:
-    - <span style="color:#66d9ef">uri</span>:
+  - match:
+    - uri:
         <span style="color:#66d9ef">prefix</span>: /ratings
-    <span style="color:#66d9ef">route</span>:
-    - <span style="color:#66d9ef">destination</span>:
+    route:
+    - destination:
         <span style="color:#66d9ef">host</span>: ratings
   ...
 </code></pre></div><p>实际上在｀VirtualService｀中hosts部分设置只是虚拟的目的地,因此不一定是已在网格中注册的服务。这允许用户为在网格内没有可路由条目的虚拟主机的流量进行建模。 通过将<code>VirtualService</code>绑定到同一Host的<code>Gateway</code>配置（如前一节所述 ），可向网格外部暴露这些Host。</p>
@@ -408,25 +412,25 @@
 </ol>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.istio.io/v1alpha3
 <span style="color:#66d9ef">kind</span>: DestinationRule
-<span style="color:#66d9ef">metadata</span>:
+metadata:
   <span style="color:#66d9ef">name</span>: reviews
-<span style="color:#66d9ef">spec</span>:
+spec:
   <span style="color:#66d9ef">host</span>: reviews
-  <span style="color:#66d9ef">trafficPolicy</span>:
-    <span style="color:#66d9ef">loadBalancer</span>:
+  trafficPolicy:
+    loadBalancer:
       <span style="color:#66d9ef">simple</span>: RANDOM
-  <span style="color:#66d9ef">subsets</span>:
+  subsets:
   - <span style="color:#66d9ef">name</span>: v1
-    <span style="color:#66d9ef">labels</span>:
+    labels:
       <span style="color:#66d9ef">version</span>: v1
   - <span style="color:#66d9ef">name</span>: v2
-    <span style="color:#66d9ef">labels</span>:
+    labels:
       <span style="color:#66d9ef">version</span>: v2
-    <span style="color:#66d9ef">trafficPolicy</span>:
-      <span style="color:#66d9ef">loadBalancer</span>:
+    trafficPolicy:
+      loadBalancer:
         <span style="color:#66d9ef">simple</span>: ROUND_ROBIN
   - <span style="color:#66d9ef">name</span>: v3
-    <span style="color:#66d9ef">labels</span>:
+    labels:
       <span style="color:#66d9ef">version</span>: v3
 </code></pre></div><p>注意，与<code>DestinationPolicy</code>不同的是，可在单个<code>DestinationRule</code>中指定多个策略（例如上面实例中的缺省策略和v2版本特定的策略）。</p>
 <h3 id="serviceentry">ServiceEntry</h3>
@@ -435,12 +439,12 @@
 <p>所有以前使用<code>EgressRule</code>进行配置的内容都可以通过<code>ServiceEntry</code>轻松完成。 例如，可以使用类似这样的配置来允许从网格内部访问一个简单的外部服务：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.istio.io/v1alpha3
 <span style="color:#66d9ef">kind</span>: ServiceEntry
-<span style="color:#66d9ef">metadata</span>:
+metadata:
   <span style="color:#66d9ef">name</span>: foo-ext
-<span style="color:#66d9ef">spec</span>:
-  <span style="color:#66d9ef">hosts</span>:
+spec:
+  hosts:
   - foo.com
-  <span style="color:#66d9ef">ports</span>:
+  ports:
   - <span style="color:#66d9ef">number</span>: <span style="color:#ae81ff">80</span>
     <span style="color:#66d9ef">name</span>: http
     <span style="color:#66d9ef">protocol</span>: HTTP
@@ -448,12 +452,12 @@
 <p>由于<code>ServiceEntry</code>配置只是将服务添加到网格内部的服务注册表中，因此它可以像注册表中的任何其他服务一样,与<code>VirtualService</code>和/或<code>DestinationRule</code>一起使用。例如，以下<code>DestinationRule</code>可用于启动外部服务的mTLS连接：</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: networking.istio.io/v1alpha3
 <span style="color:#66d9ef">kind</span>: DestinationRule
-<span style="color:#66d9ef">metadata</span>:
+metadata:
   <span style="color:#66d9ef">name</span>: foo-ext
-<span style="color:#66d9ef">spec</span>:
+spec:
   <span style="color:#66d9ef">name</span>: foo.com
-  <span style="color:#66d9ef">trafficPolicy</span>:
-    <span style="color:#66d9ef">tls</span>:
+  trafficPolicy:
+    tls:
       <span style="color:#66d9ef">mode</span>: MUTUAL
       <span style="color:#66d9ef">clientCertificate</span>: /etc/certs/myclientcert.pem
       <span style="color:#66d9ef">privateKey</span>: /etc/certs/client_private_key.pem
@@ -504,7 +508,7 @@
 <div class="zs-modal-box">
 	<div class="zs-modal-head">
 		<button type="button" class="close">×</button>
-		<span class="author"><a href="https://julianscott.github.io/"><img src="/img/favicon.png" />Water Science in R</a></span>
+		<span class="author"><a href="/"><img src="/img/favicon.png" />Water Science in R</a></span>
         
 	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
 		
@@ -573,6 +577,8 @@
                         
                         
                         
+                        
+                        
                         <a href="/tags/docker" title="docker">
                             docker
                         </a>
@@ -584,6 +590,8 @@
                         <a href="/tags/istio" title="istio">
                             istio
                         </a>
+                        
+                        
                         
                         
                         

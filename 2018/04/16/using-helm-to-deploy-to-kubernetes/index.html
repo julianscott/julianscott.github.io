@@ -10,8 +10,8 @@
     <meta property="og:type" content="article">
 
     
-    <meta property="og:image" content="https://julianscott.github.io//img/home-bg-jeep.jpg">
-    <meta property="twitter:image" content="https://julianscott.github.io//img/home-bg-jeep.jpg" />
+    <meta property="og:image" content="//img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="//img/home-bg-jeep.jpg" />
     
 
     
@@ -107,6 +107,10 @@
                         
                         <li>
                             <a href="/categories/life">life</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/note">note</a>
                         </li>
                         
                         <li>
@@ -450,7 +454,7 @@ REVISION        UPDATED                         STATUS          CHART           
 <span style="color:#ae81ff">1</span>               Mon Apr <span style="color:#ae81ff">16</span> 10:21:44 <span style="color:#ae81ff">2018</span>        SUPERSEDED      testapi-chart-0.0.1     Install complete
 <span style="color:#ae81ff">2</span>               Mon Apr <span style="color:#ae81ff">16</span> 10:43:10 <span style="color:#ae81ff">2018</span>        DEPLOYED        testapi-chart-1.0.0     Upgrade complete
 </code></pre></div><p>如果更新后的程序由于某些原因运行有问题，我们则需要回退到旧版本的应用，可以采用下面的命令进行回退。其中的参数1是前面Helm history中查看到的Release的更改历史。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">helm rollback testapi <span style="color:#ae81ff">1</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">helm rollback testapi 1
 </code></pre></div><p>使用Helm list命令查看，部署的testapi的版本已经回退到0.0.1</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash">helm list
 NAME    REVISION        UPDATED                         STATUS          CHART                   NAMESPACE
@@ -469,7 +473,7 @@ testapi <span style="color:#ae81ff">3</span>               Mon Apr <span style="
 <strong>A</strong>：Chart是支持参数替换的，可以把业务配置相关的参数设置为模板变量。使用Helm install Chart的时候可以指定一个参数值文件，这样就可以把业务参数从Chart中剥离了。例子： helm install &ndash;values=myvals.yaml wordpress</p>
 <p><strong>Q</strong>: helm能解决服务依赖吗？<!-- raw HTML omitted -->
 <strong>A</strong>：可以的，在chart可以通过requirements.yaml声明对其他chart的依赖关系。如下面声明表明chart依赖apache和mysql这两个第三方chart。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">dependencies</span>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">dependencies:
   - <span style="color:#66d9ef">name</span>: apache
     <span style="color:#66d9ef">version</span>: <span style="color:#ae81ff">1.2.3</span>
     <span style="color:#66d9ef">repository</span>: http://example.com/charts
@@ -505,7 +509,7 @@ testapi <span style="color:#ae81ff">3</span>               Mon Apr <span style="
 <div class="zs-modal-box">
 	<div class="zs-modal-head">
 		<button type="button" class="close">×</button>
-		<span class="author"><a href="https://julianscott.github.io/"><img src="/img/favicon.png" />Water Science in R</a></span>
+		<span class="author"><a href="/"><img src="/img/favicon.png" />Water Science in R</a></span>
         
 	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
 		
@@ -574,6 +578,8 @@ testapi <span style="color:#ae81ff">3</span>               Mon Apr <span style="
                         
                         
                         
+                        
+                        
                         <a href="/tags/docker" title="docker">
                             docker
                         </a>
@@ -585,6 +591,8 @@ testapi <span style="color:#ae81ff">3</span>               Mon Apr <span style="
                         <a href="/tags/istio" title="istio">
                             istio
                         </a>
+                        
+                        
                         
                         
                         
